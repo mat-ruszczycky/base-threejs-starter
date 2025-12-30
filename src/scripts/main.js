@@ -28,12 +28,16 @@ const sizes = {
 const gui = new GUI();
 const stats = new Stats();
 document.body.appendChild(stats.dom);
+stats.dom.style.transform = "scale(1.5)";
+stats.dom.style.transformOrigin = "top left";
 
 // RENDERER
 // -------------------------
 const canvas = document.querySelector("#webgl");
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
+  antialias: true,
+  powerPreference: "high-performance",
 });
 
 renderer.setSize(sizes.width, sizes.height);
@@ -58,6 +62,7 @@ const sphere = new THREE.Mesh(
   new THREE.SphereGeometry(0.5, 32, 32),
   new THREE.MeshStandardMaterial({ roughness: 0.7 })
 );
+
 sphere.position.y = sphere.geometry.parameters.radius;
 scene.add(sphere);
 

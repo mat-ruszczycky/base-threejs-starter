@@ -17,7 +17,17 @@
         <meta name="twitter:card" content="summary_large_image" />
     </head>
   <body>
-    <canvas id="webgl"></canvas>
+    <header id="header">  
+      <ul>
+        <li>FPS : Frames rendered in the last second (The higher the number the better)</li>
+        <li>MS  : Milliseconds needed to render a frame (The lower the number the better)</li>
+        <li>MB  : MBytes of allocated memory (Run Chrome with --enable-precise-memory-info)</li>
+      </ul>
+    </header>
+    <main>
+      <canvas id="webgl"></canvas>
+    </main>
+    <footer id="footer"></footer>
     <script defer type="module" src="./scripts/main.js"></script>
   </body>
 </html>
