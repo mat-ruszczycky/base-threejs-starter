@@ -106,7 +106,7 @@ function render(now) {
 
   delta = Math.min(delta, 0.1);
 
-  // controls.update();
+  controls.update();
 
   renderer.render(scene, camera);
   stats.update();
