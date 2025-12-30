@@ -18,13 +18,13 @@ const sizes = {
 };
 
 // DEBUG
+// -------------------------
 // Lil GUI - https://github.com/georgealways/lil-gui
 // Tweakplane - https://github.com/cocopon/tweakpane
 // Stats - https://github.com/mrdoob/stats.js
 // FPS : Frames rendered in the last second (The higher the number the better)
 // MS  : Milliseconds needed to render a frame (The lower the number the better)
 // MB  : MBytes of allocated memory (Run Chrome with --enable-precise-memory-info)
-// -------------------------
 const gui = new GUI();
 const stats = new Stats();
 document.body.appendChild(stats.dom);
@@ -40,11 +40,11 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0x1a1a1a);
 
-// SCENE
+// SCENE(S)
 // -------------------------
 const scene = new THREE.Scene();
 
-// HELPERS
+// HELPER(S)
 // -------------------------
 const grid = new THREE.GridHelper(10, 20, 0xeeeeee, 0x666666);
 scene.add(grid);
@@ -98,7 +98,7 @@ window.addEventListener("resize", () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
-// RENDER
+// RENDER LOOP
 // -------------------------
 function render(now) {
   let delta = (now - lastTime) / 1000;
