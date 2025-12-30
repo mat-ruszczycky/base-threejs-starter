@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import glsl from "vite-plugin-glsl";
+import wasm from "vite-plugin-wasm";
 import path from "path";
 
 const dirname = import.meta.dirname;
@@ -25,6 +26,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    wasm(),
     glsl({
       compress: true,
     }),

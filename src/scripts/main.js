@@ -11,8 +11,7 @@ import GUI from "lil-gui";
 
 // GLOBAL(S)
 // -------------------------
-const timer = new THREE.Timer();
-
+let lastTime = performance.now();
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
@@ -56,10 +55,10 @@ scene.add(axis);
 // OBJECT(S)
 // -------------------------
 const sphere = new THREE.Mesh(
-  new THREE.SphereGeometry(1, 32, 32),
+  new THREE.SphereGeometry(0.5, 32, 32),
   new THREE.MeshStandardMaterial({ roughness: 0.7 })
 );
-sphere.position.y = 1.0;
+sphere.position.y = sphere.geometry.parameters.radius;
 scene.add(sphere);
 
 // LIGHT(S)
@@ -101,11 +100,13 @@ window.addEventListener("resize", () => {
 
 // RENDER
 // -------------------------
-function render(time) {
-  timer.update();
-  const elapsedTime = timer.getElapsed();
+function render(now) {
+  let delta = (now - lastTime) / 1000;
+  lastTime = now;
 
-  controls.update();
+  delta = Math.min(delta, 0.1);
+
+  // controls.update();
 
   renderer.render(scene, camera);
   stats.update();
