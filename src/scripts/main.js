@@ -12,6 +12,7 @@ import GUI from "lil-gui";
 // GLOBAL(S)
 // -------------------------
 let lastTime = performance.now();
+let delta = 0;
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
@@ -26,10 +27,26 @@ const sizes = {
 // MS  : Milliseconds needed to render a frame (The lower the number the better)
 // MB  : MBytes of allocated memory (Run Chrome with --enable-precise-memory-info)
 const gui = new GUI();
-const stats = new Stats();
-document.body.appendChild(stats.dom);
-stats.dom.style.transform = "scale(1.5)";
-stats.dom.style.transformOrigin = "top left";
+gui.title("Debugger");
+gui.close();
+
+const statsFPS = new Stats();
+statsFPS.showPanel(0);
+statsFPS.dom.style.cssText =
+  "position:absolute;top:0px;left:0px;transform:scale(1.5);transform-origin:top left;";
+document.body.appendChild(statsFPS.dom);
+
+const statsMS = new Stats();
+statsMS.showPanel(1);
+statsMS.dom.style.cssText =
+  "position:absolute;top:72px;left:0;transform:scale(1.5);transform-origin:top left;";
+document.body.appendChild(statsMS.dom);
+
+const statsMB = new Stats();
+statsMB.showPanel(2);
+statsMB.dom.style.cssText =
+  "position:absolute;top:144px;left:0;transform:scale(1.5);transform-origin:top left;"; // 80px + 80px
+document.body.appendChild(statsMB.dom);
 
 // RENDERER
 // -------------------------
@@ -106,17 +123,23 @@ window.addEventListener("resize", () => {
 // RENDER LOOP
 // -------------------------
 function render(now) {
-  let delta = (now - lastTime) / 1000;
-  lastTime = now;
+  statsFPS.begin();
+  statsMB.begin();
+  statsMS.begin();
 
-  delta = Math.min(delta, 0.1);
+  // Delta Time Pattern
+  delta = Math.min((now - lastTime) / 1000, 0.1);
+  lastTime = now;
 
   controls.update();
 
   renderer.render(scene, camera);
-  stats.update();
+
+  statsFPS.end();
+  statsMB.end();
+  statsMS.end();
 
   requestAnimationFrame(render);
 }
 
-render();
+requestAnimationFrame(render);
