@@ -19,33 +19,28 @@ const sizes = {
 };
 
 // DEBUG
-// -------------------------
-// Lil GUI - https://github.com/georgealways/lil-gui
+// -----------------------------------------------------
+// Lil GUI    - https://github.com/georgealways/lil-gui
 // Tweakplane - https://github.com/cocopon/tweakpane
-// Stats - https://github.com/mrdoob/stats.js
-// FPS : Frames rendered in the last second (The higher the number the better)
-// MS  : Milliseconds needed to render a frame (The lower the number the better)
-// MB  : MBytes of allocated memory (Run Chrome with --enable-precise-memory-info)
+// Stats      - https://github.com/mrdoob/stats.js
+// -----------------------------------------------------
 const gui = new GUI();
 gui.title("Debugger");
 gui.close();
 
 const statsFPS = new Stats();
 statsFPS.showPanel(0);
-statsFPS.dom.style.cssText =
-  "position:absolute;top:0px;left:0px;transform:scale(1.5);transform-origin:top left;";
+statsFPS.dom.style.cssText = "position:absolute;top:0px;left:0px;";
 document.body.appendChild(statsFPS.dom);
 
 const statsMS = new Stats();
 statsMS.showPanel(1);
-statsMS.dom.style.cssText =
-  "position:absolute;top:72px;left:0;transform:scale(1.5);transform-origin:top left;";
+statsMS.dom.style.cssText = "position:absolute;top:48px;left:0;";
 document.body.appendChild(statsMS.dom);
 
 const statsMB = new Stats();
 statsMB.showPanel(2);
-statsMB.dom.style.cssText =
-  "position:absolute;top:144px;left:0;transform:scale(1.5);transform-origin:top left;"; // 80px + 80px
+statsMB.dom.style.cssText = "position:absolute;top:96px;left:0;";
 document.body.appendChild(statsMB.dom);
 
 // RENDERER
@@ -67,7 +62,7 @@ const scene = new THREE.Scene();
 
 // HELPER(S)
 // -------------------------
-const grid = new THREE.GridHelper(10, 20, 0xeeeeee, 0x666666);
+const grid = new THREE.GridHelper(100, 75, 0xeeeeee, 0x666666);
 scene.add(grid);
 
 const axis = new THREE.AxesHelper(5.5);
