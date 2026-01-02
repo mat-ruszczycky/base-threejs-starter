@@ -8,26 +8,24 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
 import GUI from "lil-gui";
+import { Pane } from "tweakpane";
 
 // GLOBAL(S)
 // -------------------------
 let lastTime = performance.now();
 let delta = 0;
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
 
 // DEBUG
 // -----------------------------------------------------
 // Lil GUI    - https://github.com/georgealways/lil-gui
-// Tweakplane - https://github.com/cocopon/tweakpane
-// Stats      - https://github.com/mrdoob/stats.js
-// -----------------------------------------------------
-const gui = new GUI();
-gui.title("Debugger");
-gui.close();
+// const gui = new GUI();
+// gui.title("Debugger");
+// gui.close();
 
+// Tweakplane - https://github.com/cocopon/tweakpane
+const pane = new Pane({ title: "Debugger" });
+
+// Stats      - https://github.com/mrdoob/stats.js
 const statsFPS = new Stats();
 statsFPS.showPanel(0);
 statsFPS.dom.style.cssText = "position:absolute;top:0px;left:0px;";
@@ -52,7 +50,7 @@ const renderer = new THREE.WebGLRenderer({
   powerPreference: "high-performance",
 });
 
-renderer.setSize(sizes.width, sizes.height);
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0x1a1a1a);
 
@@ -87,7 +85,7 @@ scene.add(ambientLight);
 // -------------------------
 const camera = new THREE.PerspectiveCamera(
   75,
-  sizes.width / sizes.height,
+  window.innerWidth / window.innerHeight,
   0.1,
   100
 );
@@ -105,13 +103,13 @@ controls.enableDamping = false;
 // HANDLER(S)
 // -------------------------
 window.addEventListener("resize", () => {
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-  camera.aspect = sizes.width / sizes.height;
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
-  renderer.setSize(sizes.width, sizes.height);
+  renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
