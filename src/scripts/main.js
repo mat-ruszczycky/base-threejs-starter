@@ -17,7 +17,7 @@ let delta = 0;
 
 // DEBUG
 // -----------------------------------------------------
-// Lil GUI    - https://github.com/georgealways/lil-gui
+// Lil GUI - https://github.com/georgealways/lil-gui
 // const gui = new GUI();
 // gui.title("Debugger");
 // gui.close();
@@ -25,7 +25,7 @@ let delta = 0;
 // Tweakplane - https://github.com/cocopon/tweakpane
 const pane = new Pane({ title: "Debugger" });
 
-// Stats      - https://github.com/mrdoob/stats.js
+// Stats - https://github.com/mrdoob/stats.js
 const statsFPS = new Stats();
 statsFPS.showPanel(0);
 statsFPS.dom.style.cssText = "position:absolute;top:0px;left:0px;";
