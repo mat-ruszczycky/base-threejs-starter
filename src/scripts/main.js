@@ -12,6 +12,7 @@ import { Pane } from "tweakpane";
 
 // GLOBAL(S)
 // -------------------------
+let isPaused = false;
 let lastTime = performance.now();
 let delta = 0;
 
@@ -113,12 +114,48 @@ window.addEventListener("resize", () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
+// KEYBOARD INPUT
+// -------------------------
+window.addEventListener("keydown", (e) => {
+  if (isPaused && e.key !== "Escape") return;
+
+  switch (e.key) {
+    case "Escape":
+      togglePause();
+      break;
+  }
+});
+
+// PAUSE
+// -------------------------
+function togglePause() {
+  isPaused = !isPaused;
+  document.body.classList.toggle("paused", isPaused);
+
+  if (!isPaused) {
+    lastTime = performance.now();
+    accumulator = 0;
+    inputState.jump = false;
+    inputState.src = null;
+  }
+}
+
 // RENDER LOOP
 // -------------------------
 function render(now) {
+  requestAnimationFrame(render);
+
   statsFPS.begin();
   statsMB.begin();
   statsMS.begin();
+
+  if (isPaused) {
+    lastTime = now;
+    statsFPS.end();
+    statsMS.end();
+    statsMB.end();
+    return;
+  }
 
   // Delta Time Pattern
   delta = Math.min((now - lastTime) / 1000, 0.1);
@@ -131,8 +168,6 @@ function render(now) {
   statsFPS.end();
   statsMB.end();
   statsMS.end();
-
-  requestAnimationFrame(render);
 }
 
 requestAnimationFrame(render);
