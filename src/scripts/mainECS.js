@@ -87,7 +87,11 @@ const endStats = () => {
 // CORE - THREE
 // =========================
 const canvas = document.querySelector("#webgl");
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  antialias: true,
+  powerPreference: "high-performance",
+});
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
