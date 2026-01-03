@@ -27,20 +27,31 @@ let delta = 0;
 const pane = new Pane({ title: "Debugger" });
 
 // Stats - https://github.com/mrdoob/stats.js
-const statsFPS = new Stats();
-statsFPS.showPanel(0);
-statsFPS.dom.style.cssText = "position:absolute;top:0px;left:0px;";
-document.body.appendChild(statsFPS.dom);
+const createStat = (panelType = 0, topPosition = "0px") => {
+  const stat = new Stats();
 
-const statsMS = new Stats();
-statsMS.showPanel(1);
-statsMS.dom.style.cssText = "position:absolute;top:48px;left:0;";
-document.body.appendChild(statsMS.dom);
+  stat.showPanel(panelType);
+  stat.dom.style.cssText = `position:absolute;top:${topPosition};left:0;`;
+  document.body.appendChild(stat.dom);
 
-const statsMB = new Stats();
-statsMB.showPanel(2);
-statsMB.dom.style.cssText = "position:absolute;top:96px;left:0;";
-document.body.appendChild(statsMB.dom);
+  return stat;
+};
+
+const statFPS = createStat(0, "0px");
+const statMS = createStat(1, "48px");
+const statMB = createStat(2, "96px");
+
+const beginStats = () => {
+  statFPS.begin();
+  statMS.begin();
+  statMB.begin();
+};
+
+const endStats = () => {
+  statFPS.end();
+  statMS.end();
+  statMB.end();
+};
 
 // RENDERER
 // -------------------------
@@ -144,16 +155,11 @@ function togglePause() {
 // -------------------------
 function render(now) {
   requestAnimationFrame(render);
-
-  statsFPS.begin();
-  statsMB.begin();
-  statsMS.begin();
+  beginStats();
 
   if (isPaused) {
     lastTime = now;
-    statsFPS.end();
-    statsMS.end();
-    statsMB.end();
+    endStats();
     return;
   }
 
@@ -165,9 +171,7 @@ function render(now) {
 
   renderer.render(scene, camera);
 
-  statsFPS.end();
-  statsMB.end();
-  statsMS.end();
+  endStats();
 }
 
 requestAnimationFrame(render);
