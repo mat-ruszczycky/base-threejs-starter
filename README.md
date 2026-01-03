@@ -62,3 +62,13 @@ This is how much RAM the page/app is using.
 |     1 | Left stick Y (-1 up → +1 down)    |
 |     2 | Right stick X                     |
 |     3 | Right stick Y                     |
+
+## ECS
+
+- **Entities** = IDs
+- **Components** = data only
+- **Systems** = logic that operates on entities with certain components
+
+### Why:
+
+It kills god-objects, scales cleanly, is faster, easier to refactor, and makes features like AI, multiplayer, and replays manageable instead of painful. **ECS keeps complexity under control as projects grow.**
