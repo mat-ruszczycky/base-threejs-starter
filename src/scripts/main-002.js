@@ -28,7 +28,7 @@ const World = {
   },
 
   time: {
-    clock: new THREE.Clock(),
+    last: 0,
     delta: 0,
   },
 };
@@ -121,7 +121,7 @@ function createControls(camera, renderer) {
 // -------------------------
 // INPUT
 // -------------------------
-function bindInput(world) {
+function setupInput(world) {
   window.addEventListener("keydown", (e) => {
     if (e.code === "Escape") {
       world.state.paused = !world.state.paused;
@@ -150,7 +150,7 @@ function bindInput(world) {
 // -------------------------
 // RESIZE
 // -------------------------
-function bindResize(camera, renderer) {
+function setupResize(camera, renderer) {
   window.addEventListener("resize", () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
@@ -170,11 +170,13 @@ function draw(world) {
   world.renderer.render(world.scene, world.camera);
 }
 
-function animate() {
-  requestAnimationFrame(animate);
+function loop(time) {
+  requestAnimationFrame(loop);
 
   World.debug.begin();
-  World.time.delta = World.time.clock.getDelta();
+
+  World.time.delta = (time - World.time.last) / 1000;
+  World.time.last = time;
 
   if (!World.state.paused) {
     update(World);
@@ -197,7 +199,7 @@ World.camera = createCamera();
 World.controls = createControls(World.camera, World.renderer);
 World.debug = createDebugger(World);
 
-bindInput(World);
-bindResize(World.camera, World.renderer);
+setupInput(World);
+setupResize(World.camera, World.renderer);
 
-requestAnimationFrame(animate);
+requestAnimationFrame(loop);
